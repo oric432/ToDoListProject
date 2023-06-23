@@ -4,18 +4,6 @@ const Todo = ({ _id, title, completed }) => {
   const { editTask, isEditLoading } = useEditTask();
   const { deleteTask, isDeleteLoading } = useDeleteTask();
 
-  const handleCheckboxChange = async () => {
-    try {
-      // Disable the checkbox during the request
-      // to provide immediate visual feedback
-      if (!isEditLoading) {
-        await editTask({ taskId: _id, completed: !completed });
-      }
-    } catch (error) {
-      // Handle error if needed
-    }
-  };
-
   return (
     <div className="todo">
       <input
@@ -24,7 +12,7 @@ const Todo = ({ _id, title, completed }) => {
         id="complete"
         disabled={isEditLoading}
         checked={completed}
-        onChange={handleCheckboxChange}
+        onChange={() => editTask({ taskId: _id, completed: !completed }}
       />
       <h5 style={{ textDecoration: completed ? "line-through" : "" }}>
         {title}
